@@ -2,6 +2,29 @@ function formatPrice(price) {
   return '$' + Number.parseFloat(price).toFixed(2);
 }
 
+
+
+
+fetch("http://localhost:3000/stores/1")
+  .then(response => response.json())
+  .then(bookStore => {
+    renderHeader(bookStore)
+    renderFooter(bookStore)
+  })
+  // renderHeader(bookStore)
+  // renderFooter(bookStore)
+
+fetch("http://localhost:3000/books")
+  .then(response => response.json())
+  .then(books => {
+    books.forEach(renderBook)
+  })
+  // bookStore.inventory.forEach(renderBook)
+  
+
+
+
+
 ///////////////////
 // render functions
 ///////////////////
@@ -126,9 +149,4 @@ bookForm.addEventListener('submit', (e) => {
 // call render functions to populate the DOM
 ////////////////////////////////////////////
 
-renderHeader(bookStore)
-renderFooter(bookStore)
-bookStore.inventory.forEach(renderBook)
-
-
-
+// NJ
