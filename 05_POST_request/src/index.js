@@ -16,7 +16,7 @@ getJSON('http://localhost:3000/stores')
 // load all the books and render them
 getJSON("http://localhost:3000/books")
   .then((books) => {
-    books.forEach(book => renderBook(book))
+    books.forEach(/*book => */renderBook/*(book)*/)
   })
   .catch(renderError);
 
@@ -217,13 +217,73 @@ bookForm.addEventListener('submit', (e) => {
     imageUrl: e.target.imageUrl.value
   }
   // pass the info as an argument to renderBook for display!
-  renderBook(book);
   // 1. Add the ability to perist the book to the database when the form is submitted. When this works, we should still see the book that is added to the DOM on submission when we refresh the page.
+  // optimistic version
+  // renderBook(book);
+  // fetch('http://localhost:3000/books', {
+  //   method: 'POST',
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify(book)
+  // })
+  //   .then(response => response.json())
+  //   .then(book => {
+  //     console.log(book);
+  //   })
+
+    fetch('http://localhost:3000/books', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(book)
+    })
+    .then(response => response.json()) // could add a spinner gif here to tell the user it isnt done yet
+    .then(book => {
+      renderBook(book)})
+    .then(book => {
+      console.log(book);
+    })
 
   e.target.reset();
 })
 
 // 2. Hook up the new Store form so it that it works to add a new store to our database and also to the DOM (as an option within the select tag)
+
+storeForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const store = {
+    name: e.target.name.value,
+    location: e.target.location.value,
+    number: e.target.number.value,
+    address: e.target.address.value,
+    hours: e.target.hours.value
+  }
+
+  // hybrid method (more like what you'd actually see, not optimistic or pessimistic)
+
+  addSelectOptionForStore(store);
+
+  fetch('http://localhost:3000/stores', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(store)
+    })
+    .then(response => response.json())
+    .then(savedStore => {
+      const storeSelector = document.querySelector('#store-selector');
+      storeSelector.querySelector('option:last-child').value = savedStore.id
+    })
+    // pessimistic version, remove line 266 to make it work
+    // .then(savedStore => {
+    //   addSelectOptionForStore(savedStore)})
+
+  e.target.reset();
+})
+
 
 // we're filling in the storeForm with some data
 // for a new store programatically so we don't 

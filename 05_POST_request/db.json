@@ -23,6 +23,14 @@
       "number": 5554443333,
       "name": "Tech BooksRus",
       "hours": "Thursday - Saturday 11am - 7pm"
+    },
+    {
+      "name": "BooksRUs",
+      "location": "LaLaLand",
+      "number": "555-555-5555",
+      "address": "555 Shangri-La",
+      "hours": "Monday - Friday 9am - 6pm",
+      "id": 4
     }
   ],
   "books": [
@@ -135,6 +143,15 @@
       ],
       "inventory": 20,
       "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/41oYsXjLvZL._SY344_BO1,204,203,200_.jpg"
+    },
+    {
+      "title": "",
+      "author": "",
+      "price": null,
+      "reviews": [],
+      "inventory": 0,
+      "imageUrl": "",
+      "id": 8
     }
   ]
 }
